@@ -4,9 +4,9 @@ The strategy revolves around utilizing the Simple Moving Average (SMA) and Expon
 
 ## Strategy
 
-> An order will be placed when there is a crossover between the Simple Moving Average (SMA) and Exponential Moving Average (EMA) on the 30-minute time frame.
+* An order will be placed when there is a crossover between the Simple Moving Average (SMA) and Exponential Moving Average (EMA) on the 30-minute time frame.
 
-> During the backtesting process, it was observed that the strategy did not result in any significant losses. However, to exercise caution, a Telegram bot was integrated into the system using the "pyTelegramBotAPI" library. This bot is designed to send notifications and updates via Telegram messaging platform.
+* During the backtesting process, it was observed that the strategy did not result in any significant losses. However, to exercise caution, a Telegram bot was integrated into the system using the "pyTelegramBotAPI" library. This bot is designed to send notifications and updates via Telegram messaging platform.
 
 **Note:** Dont forget to get your chat_id using telegram api.
 
