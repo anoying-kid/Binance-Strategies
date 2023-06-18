@@ -1,7 +1,7 @@
 from binance.client import Client
-from key import api_key, api_secret, TOKEN, chat_id
+from key import api_key, api_secret
+from time import sleep
 import pandas as pd
-import telebot
 
 def get_data(limit):
 
@@ -67,40 +67,36 @@ def placingOrder(client, side):
     curr_price = float(client.get_symbol_ticker(symbol='ETHUSDT')['price'])
 
     # quantity
-    quantity = float(f'{18*(acc_balance/curr_price):.3f}')
+    quantity = float(f'{acc_balance/curr_price:.3f}')
 
     # creating buy/sell order
     client.futures_create_order(symbol='ETHUSDT', side=side, type='MARKET', quantity= quantity)
 
 if __name__ == '__main__':
-    # authorizing
-    client = Client(api_key, api_secret)
-    print("logged in!\n")
+    while True:
+        # authorizing
+        client = Client(api_key, api_secret)
+        print("logged in!")
 
-    bot = telebot.TeleBot(TOKEN)
-    your_user_id = ""
+        # getting data
+        data = get_frames()
 
-    # getting data
-    data = get_frames()
+        # conditions
+        buy = data['Open'][678]<data['ema'][678] and data['Open'][679]>data['ema'][679]
+        sell = data['Open'][678]>data['ema'][678] and data['Open'][679]<data['ema'][679]
 
-    # conditions
-    buy = data['Open'][678]<data['ema'][678] and data['Open'][679]>data['ema'][679]
-    sell = data['Open'][678]>data['ema'][678] and data['Open'][679]<data['ema'][679]
-
-    # applying conditions
-    print(f"Time:{data['Time'][679]}")
-    if buy:
-        print("buy : {data['Time'][679]}")
-        placingOrder(client, 'BUY')
-        bot.send_message(chat_id, f"buy : {data['Time'][679]}")
-    elif sell:
-        print(f"sell: {data['Time'][679]}")
-        placingOrder(client, 'SELL')
-        bot.send_message(chat_id, f"sell : {data['Time'][679]}")
-    else:
-        if (data['Open'][678]>data['ema'][678] and data['Open'][679]>data['ema'][679]):
-            print("Candle is above ema")
+        # applying conditions
+        if buy:
+            print("buy")
+            placingOrder(client, 'BUY')
+        elif sell:
+            print("sell")
+            placingOrder(client, 'SELL')
         else:
-            print("Candle is below ema")
-        print(f"open previous:{data['Open'][678]} open:{data['Open'][679]}\nema previous:{data['ema'][678]} ema:{data['ema'][679]}")
-        client.close_connection()
+            if (data['Open'][678]>data['ema'][678] and data['Open'][679]>data['ema'][679]):
+                print("\nCandle is above ema\n")
+            else:
+                print("Candle is below ema\n")
+            print(f"open previous:{data['Open'][678]} open:{data['Open'][679]}\nema previous:{data['ema'][678]} ema:{data['ema'][679]}\n")
+            client.close_connection()
+            sleep(60*30)
