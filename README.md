@@ -23,6 +23,10 @@ pip install -r requirements.txt
 
 3. Create your new bot using [@botFather](https://telegram.me/BotFather) and find your [chat_id](https://pytba.readthedocs.io/en/latest/index.html).
 
+4. There is two files
+    * algo.py is the main file with telebot.
+    * main.py is without telebot.
+
 ## Pros
 
     I have acquired new knowledge and gained new insights.
