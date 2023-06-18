@@ -1,5 +1,5 @@
 from binance.client import Client
-from key import api_key, api_secret
+from S1_SMAEMACROSS.key import api_key, api_secret
 from time import sleep
 import pandas as pd
 

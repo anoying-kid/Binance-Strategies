@@ -1,5 +1,5 @@
 from binance.client import Client
-from key import api_key, api_secret, TOKEN, chat_id
+from S1_SMAEMACROSS.key import api_key, api_secret, TOKEN, chat_id
 import pandas as pd
 import telebot
 
